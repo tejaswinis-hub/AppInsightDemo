@@ -16,6 +16,9 @@ java {
 repositories {
 	mavenCentral()
 }
+plugins {
+	id "com.microsoft.azure.azurewebapp" version "1.7.1"
+}
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
