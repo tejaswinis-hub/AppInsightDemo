@@ -29,8 +29,7 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws IOException {
-        logger.info("entered inside doFilterInternal method");
-
+        logger.info("Entered inside doFilterInternal method");
         TelemetryClient telemetryClient = new TelemetryClient();
 
         // Start custom request telemetry
@@ -39,8 +38,9 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         requestTelemetry.setTimestamp(new java.util.Date());
         requestTelemetry.setUrl(new URL(request.getRequestURL().toString()));
 
-        // Optionally, add custom properties
-        requestTelemetry.getProperties().put("CustomProperty", "CustomValue");
+        // Add custom properties
+        String tenantId = request.getHeader("tenantId");
+        requestTelemetry.getProperties().put("TenantId", tenantId);
         logger.info("printing request telemetry values");
 
         // Track the custom request telemetry
