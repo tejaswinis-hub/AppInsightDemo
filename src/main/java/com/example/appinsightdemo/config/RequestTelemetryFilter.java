@@ -21,7 +21,7 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
 
     private final HandlerExceptionResolver resolver;
 
-    protected RequestTelemetryFilter(@Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
+    public RequestTelemetryFilter(@Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
         this.resolver = resolver;
     }
 
@@ -42,8 +42,6 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         // Optionally, add custom properties
         requestTelemetry.getProperties().put("CustomProperty", "CustomValue");
         logger.info("printing request telemetry values");
-
-        System.out.println("printing telemetry values" + requestTelemetry);
 
         // Track the custom request telemetry
         telemetryClient.trackRequest(requestTelemetry);
