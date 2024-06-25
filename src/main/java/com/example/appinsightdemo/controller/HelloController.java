@@ -1,6 +1,7 @@
 package com.example.appinsightdemo.controller;
 
 import com.microsoft.applicationinsights.TelemetryClient;
+import com.microsoft.applicationinsights.telemetry.EventTelemetry;
 import com.microsoft.applicationinsights.telemetry.RequestTelemetry;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +13,17 @@ public class HelloController {
 
     @GetMapping("/hello")
     public String sayHello() {
+
         TelemetryClient telemetryClient = new TelemetryClient();
         RequestTelemetry requestTelemetry = new RequestTelemetry();
+
+        // Add more properties as needed
+        EventTelemetry eventTelemetry = new EventTelemetry();
+        eventTelemetry.getProperties().put("CustomProperty1", "Value1");
+
+        // Track an event with custom properties
+        telemetryClient.trackEvent(eventTelemetry);
+
         requestTelemetry.getProperties().put("TenantId", "tenantId");
         telemetryClient.trackRequest(requestTelemetry);
         telemetryClient.trackTrace("custom metric");
