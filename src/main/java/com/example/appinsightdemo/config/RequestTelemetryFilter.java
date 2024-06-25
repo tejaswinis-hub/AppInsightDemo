@@ -38,7 +38,6 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } finally {
             // End the custom request telemetry
-            requestTelemetry.setSuccess(response.getStatus() < 400);
         }
     }
 
