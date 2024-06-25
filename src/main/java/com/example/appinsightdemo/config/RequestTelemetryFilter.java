@@ -13,12 +13,12 @@ import java.io.IOException;
 import java.net.URL;
 
 @Component
-public class RequestTelemetryFilter extends OncePerRequestFilter {
+public abstract class RequestTelemetryFilter extends OncePerRequestFilter {
 
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+            throws IOException {
 
         TelemetryClient telemetryClient = new TelemetryClient();
 
@@ -36,10 +36,9 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
 
         try {
             filterChain.doFilter(request, response);
-        } finally {
-            // End the custom request telemetry
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
         }
     }
-
 
 }
