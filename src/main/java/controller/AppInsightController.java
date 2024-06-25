@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppInsightController {
     @GetMapping(path = "/home")
     public String say() {
-        return "Welcome to java";
+        return "Welcome to java world";
     }
 }
