@@ -41,7 +41,7 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         // Add custom properties
         String tenantId = request.getHeader("tenantId");
         requestTelemetry.getProperties().put("TenantId", tenantId);
-        logger.info("printing request telemetry values");
+        logger.info("Added Properties");
 
         // Track the custom request telemetry
         telemetryClient.trackRequest(requestTelemetry);
