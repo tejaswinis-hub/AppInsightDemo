@@ -20,9 +20,9 @@ public class HelloController {
         TelemetryClient telemetryClient = new TelemetryClient();
         RequestTelemetry requestTelemetry = new RequestTelemetry();
         // Add custom properties
+        requestTelemetry.setSource("API");
         requestTelemetry.getProperties().put("traceId", "678trace");
         telemetryClient.trackRequest(requestTelemetry);
-
         return "Hello,Python World!";
     }
 }
