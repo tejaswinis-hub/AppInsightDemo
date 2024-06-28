@@ -41,8 +41,10 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         // Add custom properties
         String tenantId = request.getHeader("tenantId");
         String contactId = request.getHeader("contactId");
+        String traceId = request.getHeader("TraceId");
         requestTelemetry.getProperties().put("TenantId", tenantId);
         requestTelemetry.getProperties().put("ContactId", contactId);
+        requestTelemetry.getProperties().put("TraceId", traceId);
         logger.info("Added Properties");
 
         // Track the custom request telemetry
@@ -51,7 +53,7 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (Exception e) {
-            logger.info("failed to add custom properties");
+            logger.info("Failed to add custom properties");
             resolver.resolveException(request, response, null, e);
 
         }
