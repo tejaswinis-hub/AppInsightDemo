@@ -48,7 +48,7 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         logger.info("Added Properties");
 
         // Track the custom request telemetry
-        telemetryClient.getContext().setConnectionString("InstrumentationKey=bf0d9b88-d94c-42f2-b638-e086fd4807c3;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=4a72099e-5e0a-4ec6-ba60-35f1bd6cc23d");
+       // telemetryClient.getContext().setConnectionString("InstrumentationKey=bf0d9b88-d94c-42f2-b638-e086fd4807c3;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=4a72099e-5e0a-4ec6-ba60-35f1bd6cc23d");
         logger.info("ConnectionString:" + telemetryClient.getContext().getConnectionString());
         telemetryClient.trackRequest(requestTelemetry);
 
