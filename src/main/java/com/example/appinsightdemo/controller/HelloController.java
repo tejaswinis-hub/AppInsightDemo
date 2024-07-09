@@ -13,4 +13,9 @@ public class HelloController {
         return "Hello,Java World!";
     }
 
+    @GetMapping("/hello1")
+    public String sayHelloPython() {
+        return "Hello,Python World!";
+    }
+
 }

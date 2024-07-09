@@ -30,7 +30,8 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws IOException {
         logger.info("Entered inside doFilterInternal method");
-        TelemetryClient telemetryClient = new TelemetryClient();
+        // TelemetryClient telemetryClient = new TelemetryClient();
+        TelemetryClient telemetryClient = TelemetryClientData.getInstance();
 
         // Start custom request telemetry
         RequestTelemetry requestTelemetry = new RequestTelemetry();
