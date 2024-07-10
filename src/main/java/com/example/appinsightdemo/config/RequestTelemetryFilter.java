@@ -6,10 +6,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,12 +18,10 @@ import java.util.logging.Logger;
 public class RequestTelemetryFilter extends OncePerRequestFilter {
     private static final Logger logger = Logger.getLogger(RequestTelemetryFilter.class.getName());
 
-    private final HandlerExceptionResolver resolver;
     private static final TelemetryClient TELEMETRY_CLIENT = new TelemetryClient();
 
 
-    public RequestTelemetryFilter(@Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
-        this.resolver = resolver;
+    public RequestTelemetryFilter() {
     }
 
 
@@ -34,8 +30,6 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             throws IOException, ServletException {
         logger.info("Entered inside doFilterInternal method");
         try {
-            // TelemetryClient telemetryClient = new TelemetryClient();
-            // TelemetryClient telemetryClient = TelemetryClientData.getInstance();
 
             // Start custom request telemetry
             RequestTelemetry requestTelemetry = new RequestTelemetry();
@@ -62,10 +56,9 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
 
             TELEMETRY_CLIENT.trackRequest(requestTelemetry);
 
-
-            filterChain.doFilter(request, response);
         } catch (Exception e) {
             logger.info("Failed to add custom properties");
+        } finally {
             filterChain.doFilter(request, response);
         }
     }
