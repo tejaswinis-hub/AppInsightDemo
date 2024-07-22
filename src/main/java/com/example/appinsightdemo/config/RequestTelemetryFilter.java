@@ -19,6 +19,9 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
     private static final Logger logger = Logger.getLogger(RequestTelemetryFilter.class.getName());
 
     private static final TelemetryClient TELEMETRY_CLIENT = new TelemetryClient();
+    private static final String TENANT_ID = "TenantId";
+    private static final String CONTACT_ID = "ContactId";
+    private static final String TRACE_ID = "TraceId";
 
 
     public RequestTelemetryFilter() {
@@ -41,9 +44,9 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             String tenantId = request.getHeader("tenantId");
             String contactId = request.getHeader("contactId");
             String traceId = request.getHeader("TraceId");
-            requestTelemetry.getProperties().put("TenantId", tenantId);
-            requestTelemetry.getProperties().put("ContactId", contactId);
-            requestTelemetry.getProperties().put("TraceId", traceId);
+            requestTelemetry.getProperties().put(TENANT_ID, tenantId);
+            requestTelemetry.getProperties().put(CONTACT_ID, contactId);
+            requestTelemetry.getProperties().put(TRACE_ID, traceId);
             logger.info("Added Properties");
 
 
