@@ -42,10 +42,8 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         try {
 
             // Start custom request telemetry
-            /*RequestTelemetry requestTelemetry = new RequestTelemetry();
-            requestTelemetry.setName(request.getRequestURI());
-            requestTelemetry.setTimestamp(new java.util.Date());
-            requestTelemetry.setUrl(new URL(request.getRequestURL().toString()));*/
+            RequestTelemetry requestTelemetry = new RequestTelemetry();
+
 
             // Add custom properties
 
@@ -53,20 +51,21 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             String contactId = request.getHeader("contactId");
             String traceId = request.getHeader("TraceId");
 
-           /* requestTelemetry.getProperties().put(TENANT_ID, tenantId);
+            requestTelemetry.getProperties().put(TENANT_ID, tenantId);
             requestTelemetry.getProperties().put(CONTACT_ID, contactId);
-            requestTelemetry.getProperties().put(TRACE_ID, traceId);*/
+            requestTelemetry.getProperties().put(TRACE_ID, traceId);
 
-            Map<String, String> requestTelemetry = new HashMap<>();
+            /*Map<String, String> requestTelemetry = new HashMap<>();
             requestTelemetry.put(TENANT_ID, tenantId);
             requestTelemetry.put(CONTACT_ID, contactId);
-            requestTelemetry.put(TRACE_ID, traceId);
+            requestTelemetry.put(TRACE_ID, traceId);*/
             logger.info("Added Properties");
 
 
-            // TELEMETRY_CLIENT.trackRequest(requestTelemetry);
+             TELEMETRY_CLIENT.trackRequest(requestTelemetry);
+           // TELEMETRY_CLIENT.getContext().getProperties().clear();
             //track(requestTelemetry);
-            trackEventWithCustomProperties();
+
 
         } catch (Exception e) {
             logger.info("Failed to add custom properties");
@@ -107,16 +106,5 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
 
     }
 
-    private void trackEventWithCustomProperties() {
-        // Example of tracking an event with custom properties
-        EventTelemetry telemetry = new EventTelemetry("API properties");
-        telemetry.getProperties().put(TENANT_ID, "Dummy1");
-        telemetry.getProperties().put(CONTACT_ID, "Dummy2");
-        telemetry.getProperties().put(TRACE_ID, "Dummy3");
-
-
-        TELEMETRY_CLIENT.trackEvent(telemetry);
-        TELEMETRY_CLIENT.flush();
-    }
 
 }
