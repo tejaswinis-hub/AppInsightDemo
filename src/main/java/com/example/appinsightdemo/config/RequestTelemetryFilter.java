@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.logging.Logger;
 
 
@@ -36,9 +37,9 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             // RequestTelemetry requestTelemetry = new RequestTelemetry();
 
             RequestTelemetry requestTelemetry = new RequestTelemetry(request.getRequestURI(), new java.util.Date(), null, "200", true);
-            /*requestTelemetry.setName(request.getRequestURI());
-            requestTelemetry.setTimestamp(new java.util.Date());
-            requestTelemetry.setUrl(new URL(request.getRequestURL().toString()));*/
+            //requestTelemetry.setName(request.getRequestURI());
+            // requestTelemetry.setTimestamp(new java.util.Date());
+            requestTelemetry.setUrl(new URL(request.getRequestURL().toString()));
 
 
             // Add custom properties
