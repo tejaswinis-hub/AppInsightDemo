@@ -1,9 +1,7 @@
 package com.example.appinsightdemo.config;
 
 import com.microsoft.applicationinsights.TelemetryClient;
-import com.microsoft.applicationinsights.telemetry.EventTelemetry;
 import com.microsoft.applicationinsights.telemetry.RequestTelemetry;
-import com.microsoft.applicationinsights.telemetry.TelemetryContext;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,9 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
@@ -49,7 +45,7 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
 
             String tenantId = request.getHeader("tenantId");
             String contactId = request.getHeader("contactId");
-            String traceId = request.getHeader("TraceId");
+            String traceId = request.getHeader("traceId");
 
             requestTelemetry.getProperties().put(TENANT_ID, tenantId);
             requestTelemetry.getProperties().put(CONTACT_ID, contactId);
@@ -62,8 +58,8 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             logger.info("Added Properties");
 
 
-             TELEMETRY_CLIENT.trackRequest(requestTelemetry);
-           // TELEMETRY_CLIENT.getContext().getProperties().clear();
+            TELEMETRY_CLIENT.trackRequest(requestTelemetry);
+            // TELEMETRY_CLIENT.getContext().getProperties().clear();
             //track(requestTelemetry);
 
 
