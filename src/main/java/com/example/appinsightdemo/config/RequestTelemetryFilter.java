@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.logging.Logger;
 
 
@@ -34,11 +33,12 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         logger.info("Entered inside doFilterInternal method");
         try {
             // Start custom request telemetry
-            RequestTelemetry requestTelemetry = new RequestTelemetry();
-            requestTelemetry.setName(request.getRequestURI());
+            // RequestTelemetry requestTelemetry = new RequestTelemetry();
+
+            RequestTelemetry requestTelemetry = new RequestTelemetry("API details", null, null, null, false);
+            /*requestTelemetry.setName(request.getRequestURI());
             requestTelemetry.setTimestamp(new java.util.Date());
-            requestTelemetry.setUrl(new URL(request.getRequestURL().toString()));
-            //RequestTelemetry requestTelemetry = new RequestTelemetry("API details", null, null, null, true);
+            requestTelemetry.setUrl(new URL(request.getRequestURL().toString()));*/
 
 
             // Add custom properties
