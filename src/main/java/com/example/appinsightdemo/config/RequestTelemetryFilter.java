@@ -2,6 +2,7 @@ package com.example.appinsightdemo.config;
 
 import com.microsoft.applicationinsights.TelemetryClient;
 import com.microsoft.applicationinsights.telemetry.EventTelemetry;
+import com.microsoft.applicationinsights.telemetry.TelemetryContext;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
@@ -111,7 +113,11 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         telemetry.getProperties().put(CONTACT_ID, "Dummy1");
         telemetry.getProperties().put(TRACE_ID, "Dummy1");
 
+
+
+
         TELEMETRY_CLIENT.trackEvent(telemetry);
+        TELEMETRY_CLIENT.flush();
     }
 
 }
