@@ -35,7 +35,7 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             // Start custom request telemetry
             // RequestTelemetry requestTelemetry = new RequestTelemetry();
 
-            RequestTelemetry requestTelemetry = new RequestTelemetry("API details", null, null, null, false);
+            RequestTelemetry requestTelemetry = new RequestTelemetry("API details", null, null, null, true);
             /*requestTelemetry.setName(request.getRequestURI());
             requestTelemetry.setTimestamp(new java.util.Date());
             requestTelemetry.setUrl(new URL(request.getRequestURL().toString()));*/
