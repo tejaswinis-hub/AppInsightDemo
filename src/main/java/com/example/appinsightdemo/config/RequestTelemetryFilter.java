@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
 
@@ -34,9 +32,6 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             throws IOException, ServletException {
         logger.info("Entered inside doFilterInternal method");
         try {
-            //to clear azure default custom properties
-            TELEMETRY_CLIENT.getContext().getProperties().clear();
-
             // Start custom request telemetry
             RequestTelemetry requestTelemetry = new RequestTelemetry();
             //RequestTelemetry requestTelemetry = new RequestTelemetry("API details", null, null, null, true);
