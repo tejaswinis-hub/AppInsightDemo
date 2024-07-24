@@ -39,6 +39,7 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
 
             // Start custom request telemetry
             RequestTelemetry requestTelemetry = new RequestTelemetry();
+            //RequestTelemetry requestTelemetry = new RequestTelemetry("API details", null, null, null, true);
 
 
             // Add custom properties
