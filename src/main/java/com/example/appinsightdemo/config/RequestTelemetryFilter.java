@@ -1,6 +1,7 @@
 package com.example.appinsightdemo.config;
 
 import com.microsoft.applicationinsights.TelemetryClient;
+import com.microsoft.applicationinsights.telemetry.EventTelemetry;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,9 +60,10 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             requestTelemetry.put(TRACE_ID, traceId);
             logger.info("Added Properties");
 
-            track(requestTelemetry);
 
             // TELEMETRY_CLIENT.trackRequest(requestTelemetry);
+            //track(requestTelemetry);
+            trackEventWithCustomProperties();
 
         } catch (Exception e) {
             logger.info("Failed to add custom properties");
@@ -100,6 +102,16 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
                 requestTelemetry);
         logger.info("Added custom properties to track metric");
 
+    }
+
+    private void trackEventWithCustomProperties() {
+        // Example of tracking an event with custom properties
+        EventTelemetry telemetry = new EventTelemetry();
+        telemetry.getProperties().put(TENANT_ID, "Dummy1");
+        telemetry.getProperties().put(CONTACT_ID, "Dummy1");
+        telemetry.getProperties().put(TRACE_ID, "Dummy1");
+
+        TELEMETRY_CLIENT.trackEvent(telemetry);
     }
 
 }
