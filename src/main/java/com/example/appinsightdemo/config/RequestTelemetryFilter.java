@@ -35,7 +35,7 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         try {
             // Start custom request telemetry
             RequestTelemetry requestTelemetry = new RequestTelemetry();
-            requestTelemetry.setName("API Custom Properties:" + request.getRequestURI());
+            requestTelemetry.setName(request.getRequestURI());
             requestTelemetry.setUrl(new URL(request.getRequestURL().toString()));
             // requestTelemetry.setTimestamp(new java.util.Date());
 
@@ -44,11 +44,6 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             String tenantId = request.getHeader("tenantId");
             String contactId = request.getHeader("contactId");
             String traceId = request.getHeader("traceId");
-
-           /* requestTelemetry.getProperties().put(TENANT_ID, tenantId);
-            requestTelemetry.getProperties().put(CONTACT_ID, contactId);
-            requestTelemetry.getProperties().put(TRACE_ID, traceId);*/
-
 
             requestTelemetry.getContext().getProperties().put(TENANT_ID, tenantId);
             requestTelemetry.getContext().getProperties().put(CONTACT_ID, contactId);
