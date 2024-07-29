@@ -27,7 +27,7 @@ jobs:
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
-          name: AppInsightDemo
+          name: java-app
           path: '${{ github.workspace }}/build/libs/*.jar'
 
   deploy:
@@ -43,9 +43,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
-          name: AppInsightDemo
-          path: '${{ github.workspace }}/build/libs/*.jar'
-          retention-days: 30
+          name: java-app
       
       - name: Login to Azure
         uses: azure/login@v1
@@ -60,5 +58,5 @@ jobs:
         with:
           app-name: 'AppInsightDemo'
           slot-name: 'Production'
-          package: 'AppInsightDemo.jar'
+          package: 'AppInsightDemo-0.0.1-SNAPSHOT.jar'
           
