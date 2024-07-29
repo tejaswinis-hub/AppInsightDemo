@@ -32,7 +32,7 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
-        logger.info("Entered inside doFilterInternal method");
+        logger.info("Entered inside doFilterInternal method for Request telemetry filter");
         try {
             // Start custom request telemetry
             RequestTelemetry requestTelemetry = new RequestTelemetry();
