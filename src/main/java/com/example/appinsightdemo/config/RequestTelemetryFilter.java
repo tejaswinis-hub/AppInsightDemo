@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -36,7 +37,11 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             // Start custom request telemetry
             RequestTelemetry requestTelemetry = new RequestTelemetry();
             requestTelemetry.setName(request.getRequestURI());
-            requestTelemetry.setUrl(new URL(request.getRequestURL().toString()));
+            try {
+                requestTelemetry.setUrl(new URL(request.getRequestURL().toString()));
+            } catch (MalformedURLException e) {
+                logger.info("Failed to form URL");
+            }
 
             // Add custom properties
             String tenantId = request.getHeader("tenantId");
