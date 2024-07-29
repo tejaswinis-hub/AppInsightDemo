@@ -25,7 +25,7 @@ dependencies {
 	implementation 'org.projectlombok:lombok:1.18.22'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	implementation 'com.microsoft.azure:applicationinsights-core:3.4.13'
+	implementation 'com.microsoft.azure:applicationinsights-core:2.6.0'
 }
 
 tasks.named('test') {
