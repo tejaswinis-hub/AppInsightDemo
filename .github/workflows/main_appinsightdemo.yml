@@ -44,6 +44,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: java-app
+          path: '${{ github.workspace }}/build/libs/*.jar'
+          retention-days: 30
       
       - name: Login to Azure
         uses: azure/login@v1
