@@ -49,15 +49,15 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             String contactId = request.getHeader("contactId");
             String traceId = request.getHeader("traceId");
 
-            requestTelemetry.getProperties().put(TENANT_ID, tenantId);
+            /*requestTelemetry.getProperties().put(TENANT_ID, tenantId);
             requestTelemetry.getProperties().put(CONTACT_ID, contactId);
-            requestTelemetry.getProperties().put(TRACE_ID, traceId);
+            requestTelemetry.getProperties().put(TRACE_ID, traceId);*/
 
 
             logger.info("Added Properties");
 
-
-            TELEMETRY_CLIENT.trackRequest(requestTelemetry);
+            ApplicationInsightsInitializer.getTelemetryClient().trackRequest(requestTelemetry);
+            //TELEMETRY_CLIENT.trackRequest(requestTelemetry);
             // trackEvent(tenantId, contactId, traceId);
             trackCustomPropertiesUnderEvent(tenantId, contactId, traceId);
 
