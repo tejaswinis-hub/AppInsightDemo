@@ -80,10 +80,12 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
     private void trackRequest(String tenantId, String contactId, String traceId) {
         TelemetryClient singleInstanceTelemetryClient = TelemetryClientSingleton.getInstance();
         TelemetryContext context = singleInstanceTelemetryClient.getContext();
+        singleInstanceTelemetryClient.trackEvent("Request Properties");
         context.getProperties().put("value1", tenantId);
         context.getProperties().put("value2", traceId);
         context.getProperties().put("value3", contactId);
         singleInstanceTelemetryClient.flush();
+
     }
 }
 
