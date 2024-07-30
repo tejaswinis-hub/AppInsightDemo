@@ -2,9 +2,8 @@ package com.example.appinsightdemo.config;
 
 import com.microsoft.applicationinsights.TelemetryClient;
 import com.microsoft.applicationinsights.TelemetryConfiguration;
-import org.springframework.stereotype.Service;
 
-@Service
+
 public class ApplicationInsightsInitializer {
     private static TelemetryClient telemetryClient;
 

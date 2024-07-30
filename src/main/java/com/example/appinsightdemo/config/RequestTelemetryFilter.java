@@ -69,17 +69,6 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         }
     }
 
-    private void trackEvent(String tenantId, String contactId, String traceId) {
-        String eventName = "InitialEvent";
-        TELEMETRY_CLIENT.trackEvent(eventName);
-        // Add custom properties
-        TelemetryContext context = TELEMETRY_CLIENT.getContext();
-        context.getProperties().put(TENANT_ID, tenantId);
-        context.getProperties().put(TRACE_ID, traceId);
-        context.getProperties().put(CONTACT_ID, contactId);
-        TELEMETRY_CLIENT.flush();
-    }
-
     private void trackCustomPropertiesUnderEvent(String tenantId, String contactId, String traceId) {
         logger.info("Entered inside event telemetry");
         TelemetryClient singleInstanceTelemetryClient = TelemetryClientSingleton.getInstance();
