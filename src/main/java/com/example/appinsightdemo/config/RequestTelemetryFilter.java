@@ -1,6 +1,7 @@
 package com.example.appinsightdemo.config;
 
 import com.microsoft.applicationinsights.TelemetryClient;
+import com.microsoft.applicationinsights.telemetry.RequestTelemetry;
 import com.microsoft.applicationinsights.telemetry.TelemetryContext;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.logging.Logger;
 
 
@@ -33,30 +36,30 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         logger.info("Entered inside doFilterInternal method for Request telemetry filter data");
         try {
             // Start custom request telemetry
-           /* RequestTelemetry requestTelemetry = new RequestTelemetry();
-            requestTelemetry.setName(request.getRequestURI());
+            RequestTelemetry requestTelemetry = new RequestTelemetry();
+            requestTelemetry.setName(request.getMethod() + " " + request.getRequestURI());
             try {
                 requestTelemetry.setUrl(new URL(request.getRequestURL().toString()));
             } catch (MalformedURLException e) {
                 logger.info("Failed to form URL");
-            }*/
+            }
 
             // Add custom properties
             String tenantId = request.getHeader("tenantId");
             String contactId = request.getHeader("contactId");
             String traceId = request.getHeader("traceId");
 
-            /*requestTelemetry.getProperties().put(TENANT_ID, tenantId);
+            requestTelemetry.getProperties().put(TENANT_ID, tenantId);
             requestTelemetry.getProperties().put(CONTACT_ID, contactId);
-            requestTelemetry.getProperties().put(TRACE_ID, traceId);*/
+            requestTelemetry.getProperties().put(TRACE_ID, traceId);
 
 
             logger.info("Added Properties");
 
 
-            //TELEMETRY_CLIENT.trackRequest(requestTelemetry);
+            TELEMETRY_CLIENT.trackRequest(requestTelemetry);
             // trackEvent(tenantId, contactId, traceId);
-            trackRequest(tenantId, contactId, traceId);
+            trackCustomPropertiesUnderEvent(tenantId, contactId, traceId);
 
 
         } catch (Exception e) {
@@ -77,7 +80,8 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         TELEMETRY_CLIENT.flush();
     }
 
-    private void trackRequest(String tenantId, String contactId, String traceId) {
+    private void trackCustomPropertiesUnderEvent(String tenantId, String contactId, String traceId) {
+        logger.info("Entered inside event telemetry");
         TelemetryClient singleInstanceTelemetryClient = TelemetryClientSingleton.getInstance();
         TelemetryContext context = singleInstanceTelemetryClient.getContext();
         singleInstanceTelemetryClient.trackEvent("Request Properties");
@@ -85,6 +89,7 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         context.getProperties().put("value2", traceId);
         context.getProperties().put("value3", contactId);
         singleInstanceTelemetryClient.flush();
+        logger.info("Completed event telemetry");
 
     }
 }
