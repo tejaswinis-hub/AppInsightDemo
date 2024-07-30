@@ -53,11 +53,13 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             requestTelemetry.getProperties().put(CONTACT_ID, contactId);
             requestTelemetry.getProperties().put(TRACE_ID, traceId);
 
+
             logger.info("Added Properties");
 
 
             TELEMETRY_CLIENT.trackRequest(requestTelemetry);
             trackEvent(tenantId, contactId, traceId);
+            trackRequest(tenantId, contactId, traceId);
 
 
         } catch (Exception e) {
@@ -75,6 +77,14 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         context.getProperties().put(TENANT_ID, tenantId);
         context.getProperties().put(TRACE_ID, traceId);
         context.getProperties().put(CONTACT_ID, contactId);
+        TELEMETRY_CLIENT.flush();
+    }
+
+    private void trackRequest(String tenantId, String contactId, String traceId) {
+        TelemetryContext context = TELEMETRY_CLIENT.getContext();
+        context.getProperties().put("value1", tenantId);
+        context.getProperties().put("value2", traceId);
+        context.getProperties().put("value3", contactId);
         TELEMETRY_CLIENT.flush();
     }
 }
