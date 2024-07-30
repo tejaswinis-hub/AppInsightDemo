@@ -25,8 +25,7 @@ public class HelloController {
 
     @PostMapping("/hello2")
     public String sayHelloP() {
-
-        customTelemetryExample.logInitialEvent();
+        //customTelemetryExample.logInitialEvent();
         return "Success";
     }
 
