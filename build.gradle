@@ -28,6 +28,12 @@ dependencies {
 	implementation 'com.microsoft.azure:applicationinsights-core:2.6.0'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
+configurations {
+	all {
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
+}
+
 
 tasks.named('test') {
 	useJUnitPlatform()
