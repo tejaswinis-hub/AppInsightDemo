@@ -45,20 +45,33 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             } catch (MalformedURLException e) {
                 logger.info("Failed to form URL");
             }
+            requestTelemetry.setResponseCode("200");
 
             // Add custom properties
             String tenantId = request.getHeader("tenantId");
             String contactId = request.getHeader("contactId");
             String traceId = request.getHeader("traceId");
 
-            /*requestTelemetry.getProperties().put(TENANT_ID, tenantId);
+            TelemetryClient singleInstanceTelemetryClient = TelemetryClientSingleton.getInstance();
+            TelemetryContext context = singleInstanceTelemetryClient.getContext();
+
+            requestTelemetry.setId(context.getOperation().getId());
+
+
+            context.getProperties().put(TENANT_ID, tenantId);
+            context.getProperties().put(CONTACT_ID, contactId);
+            context.getProperties().put(TRACE_ID, traceId);
+            singleInstanceTelemetryClient.trackRequest(requestTelemetry);
+            singleInstanceTelemetryClient.flush();
+
+           /* requestTelemetry.getProperties().put(TENANT_ID, tenantId);
             requestTelemetry.getProperties().put(CONTACT_ID, contactId);
             requestTelemetry.getProperties().put(TRACE_ID, traceId);*/
 
 
             logger.info("Added Properties");
 
-            ApplicationInsightsInitializer.getTelemetryClient().trackRequest(requestTelemetry);
+            //ApplicationInsightsInitializer.getTelemetryClient().trackRequest(requestTelemetry);
             //TELEMETRY_CLIENT.trackRequest(requestTelemetry);
             // trackEvent(tenantId, contactId, traceId);
             trackCustomPropertiesUnderEvent(tenantId, contactId, traceId);
