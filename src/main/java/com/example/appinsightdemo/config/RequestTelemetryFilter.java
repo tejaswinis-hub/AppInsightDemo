@@ -1,6 +1,8 @@
 package com.example.appinsightdemo.config;
 
 import com.microsoft.applicationinsights.TelemetryClient;
+import com.microsoft.applicationinsights.telemetry.EventTelemetry;
+import com.microsoft.applicationinsights.telemetry.MetricTelemetry;
 import com.microsoft.applicationinsights.telemetry.RequestTelemetry;
 import com.microsoft.applicationinsights.telemetry.TelemetryContext;
 import jakarta.servlet.FilterChain;
@@ -60,6 +62,7 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             //TELEMETRY_CLIENT.trackRequest(requestTelemetry);
             // trackEvent(tenantId, contactId, traceId);
             trackCustomPropertiesUnderEvent(tenantId, contactId, traceId);
+            trackCustomPropertiesUnderMetric(tenantId, contactId, traceId);
 
 
         } catch (Exception e) {
@@ -73,12 +76,27 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         logger.info("Entered inside event telemetry");
         TelemetryClient singleInstanceTelemetryClient = TelemetryClientSingleton.getInstance();
         TelemetryContext context = singleInstanceTelemetryClient.getContext();
-        singleInstanceTelemetryClient.trackEvent("Request Properties");
+        EventTelemetry eventTelemetry = new EventTelemetry("Request Event");
+        singleInstanceTelemetryClient.trackEvent(eventTelemetry);
         context.getProperties().put("value1", tenantId);
         context.getProperties().put("value2", traceId);
         context.getProperties().put("value3", contactId);
         singleInstanceTelemetryClient.flush();
         logger.info("Completed event telemetry");
+
+    }
+
+    private void trackCustomPropertiesUnderMetric(String tenantId, String contactId, String traceId) {
+        logger.info("Entered inside event telemetry");
+        TelemetryClient singleInstanceTelemetryClient = TelemetryClientSingleton.getInstance();
+        TelemetryContext context = singleInstanceTelemetryClient.getContext();
+        MetricTelemetry metricTelemetry = new MetricTelemetry("RequestMetric", 15);
+        singleInstanceTelemetryClient.trackMetric(metricTelemetry);
+        context.getProperties().put("key1", tenantId);
+        context.getProperties().put("key2", traceId);
+        context.getProperties().put("key3", contactId);
+        singleInstanceTelemetryClient.flush();
+        logger.info("Completed metric telemetry");
 
     }
 }
