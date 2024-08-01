@@ -39,7 +39,7 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
         try {
             // Start custom request telemetry
             RequestTelemetry requestTelemetry = new RequestTelemetry();
-            requestTelemetry.setName(request.getMethod() + " " + request.getRequestURI());
+            requestTelemetry.setName("Telemetry: " + request.getMethod() + " " + request.getRequestURI());
             try {
                 requestTelemetry.setUrl(new URL(request.getRequestURL().toString()));
             } catch (MalformedURLException e) {
@@ -55,7 +55,7 @@ public class RequestTelemetryFilter extends OncePerRequestFilter {
             TelemetryClient singleInstanceTelemetryClient = TelemetryClientSingleton.getInstance();
             TelemetryContext context = singleInstanceTelemetryClient.getContext();
 
-            requestTelemetry.setId(context.getOperation().getId());
+            requestTelemetry.setId(context.getOperation().getParentId());
 
 
             context.getProperties().put(TENANT_ID, tenantId);
